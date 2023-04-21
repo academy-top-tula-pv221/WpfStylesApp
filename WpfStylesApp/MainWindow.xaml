@@ -1,0 +1,88 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfStylesApp"
+        xmlns:System="clr-namespace:System;assembly=System.Runtime" x:Class="WpfStylesApp.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="styleBtnEnabled">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=checkBox, Path=IsChecked}" Value="True">
+                    <Setter Property="Button.IsEnabled" Value="False"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="styleMy">
+            <Setter Property="Control.FontSize" Value="20"/>
+            <Setter Property="Control.Background" Value="DarkRed"/>
+            <Setter Property="Control.Foreground" Value="White"/>
+            <Setter Property="FrameworkElement.Margin" Value="10"/>
+        </Style>
+        <Style x:Key="styleMyAdv" BasedOn="{StaticResource styleMy}">
+            <Setter Property="Control.Width" Value="200"/>
+            <Setter Property="Control.Background" Value="DarkBlue"/>
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderThickness="5"
+                                BorderBrush="Aqua">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=checkBox, Path=IsChecked}" Value="True">
+                    <Setter Property="Button.IsEnabled" Value="False"/>
+                </DataTrigger>
+                <EventTrigger RoutedEvent="Control.MouseEnter">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="Width" Duration="0:0:3" To="300" AutoReverse="True"/>
+                                <DoubleAnimation Storyboard.TargetProperty="Height" Duration="0:0:3" To="100" AutoReverse="True"/>
+                                <ColorAnimation Storyboard.TargetProperty="Background" Duration="0:0:3" To="Orange" AutoReverse="True"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                <!--<MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="Button.IsMouseOver" Value="True"/>
+                        <Condition Property="Button.IsDefault" Value="True"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="FrameworkElement.Width" Value="300"/>
+                    <Setter Property="Control.Background" Value="Orange"/>
+                </MultiTrigger>-->
+                <!--<Trigger Property="Control.IsMouseOver" Value="True">
+                    <Setter Property="Control.Width" Value="300"/>
+                    <Setter Property="Control.Background" Value="Orange"/>
+                </Trigger>-->
+            </Style.Triggers>
+        </Style>
+        <SolidColorBrush x:Key="cRed" Color="DarkRed"/>
+        <SolidColorBrush x:Key="cWhite" Color="White"/>
+        <Thickness x:Key="bMargin" Left="10" Top="10" Right="10" Bottom="10"/>
+    </Window.Resources>
+    <StackPanel>
+        <!--<Button Style="{StaticResource styleMy}" Content="Click me"/>-->
+        <CheckBox x:Name="checkBox" Content="Checked" FontSize="30" IsChecked="True"/> 
+        <Button Style="{StaticResource styleMyAdv}"
+                Content="Style Button"
+                IsDefault="True"
+                Height="50"/>
+        <TextBox />
+
+        <Button x:Name="btnStyle"
+                Content="Style on C#"/>
+
+        <Button Style="{StaticResource styleBtnEnabled}">
+            Enabled button
+        </Button>
+
+    </StackPanel>
+</Window>
